@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+History — PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<div class="section-head">
+
+    <p class="eyebrow">
+        YOUR PLANS
+    </p>
+
+    <h1>
+        Recommendation History
+    </h1>
+
+</div>
+
+
+<div
+    id="history-list"
+    class="history-list"
+>
+
+    <p>
+        Loading...
+    </p>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+(async function () {
+
+    const result =
+        await api(
+            "/api/history"
+        );
+
+    if (!result.ok) {
+
+        window.location.href =
+            "/login";
+
+        return;
+    }
+
+
+    const box =
+        document.getElementById(
+            "history-list"
+        );
+
+
+    if (!result.data.length) {
+
+        box.innerHTML = `
+            <div class="empty">
+                No recommendations yet.
+                Start a planner.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    box.innerHTML =
+        result.data.map(
+            function (item) {
+
+                return `
+
+                    <a
+                        class="history-item"
+                        href="/recommendation/${item.id}"
+                    >
+
+                        <div>
+
+                            <b>
+                                ${escapeHtml(
+                                    item.planner_type
+                                        .toUpperCase()
+                                )}
+                                PLAN
+                            </b>
+
+                            <p>
+                                ₹${Number(
+                                    item.budget
+                                ).toLocaleString(
+                                    "en-IN"
+                                )}
+
+                                ·
+
+                                ${new Date(
+                                    item.created_at
+                                ).toLocaleString()}
+                            </p>
+
+                        </div>
+
+                        <span>
+                            ${escapeHtml(
+                                item.ai_source
+                            )}
+                        </span>
+
+                    </a>
+
+                `;
+
+            }
+        ).join("");
+
+})();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login — PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrap">
+
+    <form
+        class="form-card"
+        id="login-form"
+    >
+
+        <p class="eyebrow">
+            WELCOME BACK
+        </p>
+
+        <h1>
+            Sign in
+        </h1>
+
+
+        <label>
+
+            Email
+
+            <input
+                type="email"
+                id="email"
+                required
+            >
+
+        </label>
+
+
+        <label>
+
+            Password
+
+            <input
+                type="password"
+                id="password"
+                required
+            >
+
+        </label>
+
+
+        <button
+            class="button primary full"
+            type="submit"
+        >
+            Login
+        </button>
+
+
+        <p
+            class="form-message"
+            id="message"
+        ></p>
+
+
+        <p>
+            New here?
+            <a href="/register">
+                Create an account
+            </a>
+        </p>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+document
+    .getElementById("login-form")
+    .addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+            const result =
+                await api(
+                    "/api/auth/login",
+                    {
+                        method: "POST",
+
+                        body: {
+                            email:
+                                document.getElementById(
+                                    "email"
+                                ).value,
+
+                            password:
+                                document.getElementById(
+                                    "password"
+                                ).value
+                        }
+                    }
+                );
+
+            if (result.ok) {
+
+                window.location.href =
+                    "/dashboard";
+
+            } else {
+
+                message.textContent =
+                    result.data.detail ||
+                    "Login failed";
+
+            }
+
+        }
+    );
+
+</script>
+
+{% endblock %}

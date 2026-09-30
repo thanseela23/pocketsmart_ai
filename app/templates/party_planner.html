@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+
+{% block title %}
+Party Budget Planner — PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<section class="planner-layout">
+
+    <div class="planner-intro">
+
+        <p class="eyebrow">
+            BUDGET PLANNER
+        </p>
+
+        <h1>
+            Party Budget Planner
+        </h1>
+
+        <p>
+            Set your event budget and guest count.
+            The planner allocates spending across
+            food, venue, decoration and entertainment.
+        </p>
+
+        <div class="tip-box">
+
+            AI responses use the demo catalog
+            when no Gemini key is configured.
+
+        </div>
+
+    </div>
+
+
+    <form
+        class="form-card planner-form"
+        id="party-form"
+    >
+
+        <label>
+
+            Total budget (₹)
+
+            <input
+                name="budget"
+                type="number"
+                min="1"
+                required
+                placeholder="50000"
+            >
+
+        </label>
+
+
+        <label>
+
+            Guests
+
+            <input
+                name="guests"
+                type="number"
+                min="1"
+                required
+                placeholder="50"
+            >
+
+        </label>
+
+
+        <label>
+
+            Event type
+
+            <select name="event_type">
+
+                <option>
+                    Birthday
+                </option>
+
+                <option>
+                    Wedding
+                </option>
+
+                <option>
+                    Corporate
+                </option>
+
+                <option>
+                    Anniversary
+                </option>
+
+                <option>
+                    Engagement
+                </option>
+
+            </select>
+
+        </label>
+
+
+        <label>
+
+            Venue preference
+
+            <input
+                name="venue"
+                value="Indoor"
+            >
+
+        </label>
+
+
+        <label>
+
+            City
+
+            <input
+                name="city"
+                value="Vellore"
+            >
+
+        </label>
+
+
+        <label>
+
+            Notes
+
+            <textarea
+                name="notes"
+                placeholder="Theme, food preference, timing..."
+            ></textarea>
+
+        </label>
+
+
+        <button
+            class="button primary full"
+            type="submit"
+        >
+            Generate Recommendations
+        </button>
+
+
+        <p
+            class="form-message"
+            id="message"
+        ></p>
+
+    </form>
+
+</section>
+
+
+<section
+    id="result"
+    class="result-section hidden"
+></section>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+const form =
+    document.getElementById(
+        "party-form"
+    );
+
+
+form.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+        message.textContent =
+            "Generating your plan...";
+
+
+        const formData =
+            new FormData(form);
+
+
+        const body = {
+
+            budget:
+                Number(
+                    formData.get(
+                        "budget"
+                    )
+                ),
+
+            guests:
+                Number(
+                    formData.get(
+                        "guests"
+                    )
+                ),
+
+            event_type:
+                formData.get(
+                    "event_type"
+                ),
+
+            venue:
+                formData.get(
+                    "venue"
+                ),
+
+            city:
+                formData.get(
+                    "city"
+                ),
+
+            notes:
+                formData.get(
+                    "notes"
+                ) || ""
+        };
+
+
+        const result =
+            await api(
+                "/api/generate-party",
+                {
+                    method: "POST",
+                    body: body
+                }
+            );
+
+
+        if (!result.ok) {
+
+            message.textContent =
+                result.data.detail ||
+                "Could not generate plan";
+
+            return;
+        }
+
+
+        message.textContent = "";
+
+        renderResult(
+            result.data
+        );
+
+    }
+);
+
+
+function renderResult(data) {
+
+    const result =
+        document.getElementById(
+            "result"
+        );
+
+    result.classList.remove(
+        "hidden"
+    );
+
+
+    result.innerHTML = `
+
+        <div class="result-head">
+
+            <div>
+
+                <p class="eyebrow">
+                    ${
+                        data.ai_source === "gemini"
+                            ? "GEMINI AI"
+                            : "LOCAL FALLBACK"
+                    }
+                </p>
+
+                <h2>
+                    Your personalized plan
+                </h2>
+
+                <p>
+                    ${escapeHtml(
+                        data.summary
+                    )}
+                </p>
+
+            </div>
+
+            <a
+                class="button secondary"
+                href="/recommendation/${data.id}"
+            >
+                Open full result
+            </a>
+
+        </div>
+
+
+        <div class="allocation-grid">
+
+            ${data.allocations.map(
+                function (item) {
+
+                    return `
+
+                        <div class="allocation">
+
+                            <b>
+                                ${escapeHtml(
+                                    item.category
+                                )}
+                            </b>
+
+                            <strong>
+                                ₹${Number(
+                                    item.amount
+                                ).toLocaleString(
+                                    "en-IN"
+                                )}
+                            </strong>
+
+                            <small>
+                                ${escapeHtml(
+                                    item.reason
+                                )}
+                            </small>
+
+                        </div>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </div>
+
+
+        <h3>
+            Recommendations
+        </h3>
+
+
+        <div class="cards three">
+
+            ${data.recommendations.map(
+                function (item) {
+
+                    return `
+
+                        <article class="recommend-card">
+
+                            <span>
+                                ${escapeHtml(
+                                    item.category
+                                )}
+                            </span>
+
+                            <h3>
+                                ${escapeHtml(
+                                    item.title
+                                )}
+                            </h3>
+
+                            <p>
+                                ${escapeHtml(
+                                    item.platform
+                                )}
+                                · ⭐
+                                ${item.rating}
+                            </p>
+
+                            <strong>
+                                ₹${Number(
+                                    item.price
+                                ).toLocaleString(
+                                    "en-IN"
+                                )}
+                            </strong>
+
+                            <a
+                                href="${item.url}"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                Visit platform
+                            </a>
+
+                        </article>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </div>
+
+
+        <div class="tip-box">
+
+            <b>
+                Tips
+            </b>
+
+            <ul>
+
+                ${data.tips.map(
+                    function (tip) {
+
+                        return `
+                            <li>
+                                ${escapeHtml(
+                                    tip
+                                )}
+                            </li>
+                        `;
+
+                    }
+                ).join("")}
+
+            </ul>
+
+        </div>
+
+    `;
+}
+
+</script>
+
+{% endblock %}

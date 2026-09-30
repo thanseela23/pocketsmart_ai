@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard — PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<div id="dashboard"></div>
+
+
+<section class="section">
+
+    <div class="section-head">
+
+        <p class="eyebrow">
+            PLANNERS
+        </p>
+
+        <h2>
+            Start a new plan
+        </h2>
+
+    </div>
+
+
+    <div class="cards three">
+
+        <a
+            class="feature-card"
+            href="/planner/home"
+        >
+
+            <span>🏠</span>
+
+            <h3>
+                Home
+            </h3>
+
+            <p>
+                Interior budget planning.
+            </p>
+
+        </a>
+
+
+        <a
+            class="feature-card"
+            href="/planner/party"
+        >
+
+            <span>🎉</span>
+
+            <h3>
+                Party
+            </h3>
+
+            <p>
+                Event budget planning.
+            </p>
+
+        </a>
+
+
+        <a
+            class="feature-card"
+            href="/planner/jewelry"
+        >
+
+            <span>💎</span>
+
+            <h3>
+                Jewelry
+            </h3>
+
+            <p>
+                Occasion styling.
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+(async function () {
+
+    const result =
+        await api(
+            "/api/auth/session-data"
+        );
+
+    if (!result.ok) {
+
+        window.location.href =
+            "/login";
+
+        return;
+    }
+
+    const data = result.data;
+
+    document.getElementById(
+        "dashboard"
+    ).innerHTML = `
+
+        <section class="dashboard-head">
+
+            <div>
+
+                <p class="eyebrow">
+                    YOUR DASHBOARD
+                </p>
+
+                <h1>
+                    Hello,
+                    ${escapeHtml(
+                        data.user.name
+                    )}
+                    👋
+                </h1>
+
+                <p>
+                    Recent recommendation plans:
+                    ${data.recent_count}
+                </p>
+
+            </div>
+
+            <a
+                class="button secondary"
+                href="/history"
+            >
+                View history
+            </a>
+
+        </section>
+
+    `;
+
+})();
+
+</script>
+
+{% endblock %}

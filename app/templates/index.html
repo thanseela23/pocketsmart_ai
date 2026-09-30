@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+PocketSmart AI — Smart Budget Assistant
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div>
+
+        <p class="eyebrow">
+            SMART BUDGET · SMART RECOMMENDATIONS
+        </p>
+
+        <h1>
+            Plan more.
+            Overspend less.
+        </h1>
+
+        <p class="hero-copy">
+            PocketSmart AI turns your budget,
+            preferences and optional outfit image
+            into a practical plan for your home,
+            party or jewelry needs.
+        </p>
+
+        <div class="actions">
+
+            <a
+                class="button primary"
+                href="/register"
+            >
+                Get Started
+            </a>
+
+            <a
+                class="button secondary"
+                href="/login"
+            >
+                I already have an account
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="mini-label">
+            AI budget snapshot
+        </div>
+
+        <div class="big-number">
+            ₹25,000
+        </div>
+
+        <div class="progress">
+            <span style="width:78%"></span>
+        </div>
+
+        <p>
+            Balanced across essentials,
+            style and a safety buffer.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-head">
+
+        <p class="eyebrow">
+            THREE SMART PLANNERS
+        </p>
+
+        <h2>
+            Choose what you want to plan
+        </h2>
+
+    </div>
+
+
+    <div class="cards three">
+
+        <a
+            class="feature-card"
+            href="/planner/home"
+        >
+
+            <span>🏠</span>
+
+            <h3>
+                Home Interior
+            </h3>
+
+            <p>
+                Allocate your budget across
+                furniture, lighting, decor
+                and storage.
+            </p>
+
+        </a>
+
+
+        <a
+            class="feature-card"
+            href="/planner/party"
+        >
+
+            <span>🎉</span>
+
+            <h3>
+                Party Planner
+            </h3>
+
+            <p>
+                Balance food, venue,
+                decoration and entertainment
+                around your guest count.
+            </p>
+
+        </a>
+
+
+        <a
+            class="feature-card"
+            href="/planner/jewelry"
+        >
+
+            <span>💎</span>
+
+            <h3>
+                Jewelry Planner
+            </h3>
+
+            <p>
+                Match jewelry to an occasion,
+                style and optional outfit image.
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register — PocketSmart AI
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrap">
+
+    <form
+        class="form-card"
+        id="register-form"
+    >
+
+        <p class="eyebrow">
+            POCKETSMART AI
+        </p>
+
+        <h1>
+            Create account
+        </h1>
+
+
+        <label>
+
+            Name
+
+            <input
+                id="name"
+                required
+                minlength="2"
+            >
+
+        </label>
+
+
+        <label>
+
+            Email
+
+            <input
+                type="email"
+                id="email"
+                required
+            >
+
+        </label>
+
+
+        <label>
+
+            Password
+
+            <input
+                type="password"
+                id="password"
+                minlength="8"
+                required
+            >
+
+        </label>
+
+
+        <button
+            class="button primary full"
+            type="submit"
+        >
+            Create account
+        </button>
+
+
+        <p
+            class="form-message"
+            id="message"
+        ></p>
+
+
+        <p>
+            Already registered?
+
+            <a href="/login">
+                Login
+            </a>
+        </p>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+document
+    .getElementById("register-form")
+    .addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+            const result =
+                await api(
+                    "/api/auth/register",
+                    {
+                        method: "POST",
+
+                        body: {
+                            name:
+                                document.getElementById(
+                                    "name"
+                                ).value,
+
+                            email:
+                                document.getElementById(
+                                    "email"
+                                ).value,
+
+                            password:
+                                document.getElementById(
+                                    "password"
+                                ).value
+                        }
+                    }
+                );
+
+            if (result.ok) {
+
+                window.location.href =
+                    "/dashboard";
+
+            } else {
+
+                message.textContent =
+                    result.data.detail ||
+                    "Registration failed";
+
+            }
+
+        }
+    );
+
+</script>
+
+{% endblock %}

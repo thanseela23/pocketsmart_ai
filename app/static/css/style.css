@@ -1,0 +1,654 @@
+:root {
+    --ink: #17202a;
+    --muted: #687385;
+    --bg: #f7f8fc;
+    --card: #ffffff;
+    --line: #e7e9ef;
+    --accent: #6c4df6;
+    --accent-dark: #5334d7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+.topbar {
+    min-height: 72px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+        0
+        max(24px, calc((100% - 1120px) / 2));
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.brand span {
+    color: var(--accent);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    color: #566071;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+.link-button {
+    border: 0;
+    background: none;
+    color: #566071;
+    cursor: pointer;
+    font: inherit;
+}
+
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 52px 24px 80px;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+
+    gap: 40px;
+    align-items: center;
+
+    padding:
+        50px 0
+        75px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+
+    color: var(--accent);
+
+    margin:
+        0 0
+        12px;
+}
+
+.hero h1 {
+    font-size: 64px;
+    line-height: 1.03;
+
+    margin:
+        0 0
+        22px;
+
+    max-width: 700px;
+}
+
+.hero-copy {
+    font-size: 18px;
+    line-height: 1.7;
+
+    color: var(--muted);
+
+    max-width: 680px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        13px
+        18px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    border: 1px solid var(--line);
+
+    cursor: pointer;
+}
+
+.primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.primary:hover {
+    background: var(--accent-dark);
+}
+
+.secondary {
+    background: #ffffff;
+}
+
+.full {
+    width: 100%;
+}
+
+.hero-card,
+.form-card,
+.feature-card,
+.recommend-card,
+.allocation,
+.history-item,
+.empty,
+.tip-box {
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(24, 32, 54, 0.05);
+}
+
+.hero-card {
+    padding: 30px;
+}
+
+.mini-label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.big-number {
+    font-size: 42px;
+    font-weight: 800;
+    margin: 12px 0;
+}
+
+.progress {
+    height: 10px;
+    background: #ececf5;
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+
+    background: var(--accent);
+
+    border-radius: 10px;
+}
+
+.hero-card p {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.section {
+    margin-top: 25px;
+}
+
+.section-head {
+    margin-bottom: 26px;
+}
+
+.section-head h1,
+.section-head h2 {
+    margin:
+        0 0
+        10px;
+
+    font-size: 38px;
+}
+
+.section-head p:not(.eyebrow) {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.cards {
+    display: grid;
+    gap: 18px;
+}
+
+.cards.three {
+    grid-template-columns:
+        repeat(3, 1fr);
+}
+
+.feature-card {
+    padding: 26px;
+    transition: 0.2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    border-color: #d2caff;
+}
+
+.feature-card span {
+    font-size: 32px;
+}
+
+.feature-card h3 {
+    font-size: 20px;
+    margin:
+        16px 0
+        8px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.auth-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+.form-card {
+    width: min(520px, 100%);
+    padding: 32px;
+}
+
+.form-card h1 {
+    margin:
+        0 0
+        25px;
+
+    font-size: 36px;
+}
+
+.form-card label {
+    display: block;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    margin:
+        15px 0;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 7px;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    background: #ffffff;
+
+    color: var(--ink);
+}
+
+.form-card input:focus,
+.form-card textarea:focus,
+.form-card select:focus {
+    outline: 2px solid
+        rgba(108, 77, 246, 0.15);
+
+    border-color:
+        var(--accent);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+select[multiple] {
+    min-height: 125px;
+}
+
+.form-message {
+    min-height: 20px;
+
+    color: #c0392b;
+
+    font-size: 13px;
+}
+
+.planner-layout {
+    display: grid;
+
+    grid-template-columns:
+        0.8fr
+        1.2fr;
+
+    gap: 40px;
+
+    align-items: start;
+}
+
+.planner-intro h1 {
+    font-size: 48px;
+
+    margin:
+        0 0
+        18px;
+}
+
+.planner-intro > p:not(.eyebrow) {
+    color: var(--muted);
+
+    line-height: 1.7;
+
+    font-size: 17px;
+}
+
+.tip-box {
+    padding: 18px;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+
+    margin-top: 20px;
+}
+
+.result-section {
+    margin-top: 45px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.result-head,
+.dashboard-head {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.result-head h1,
+.result-head h2,
+.dashboard-head h1 {
+    margin:
+        0 0
+        10px;
+}
+
+.result-head p:not(.eyebrow),
+.dashboard-head p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.allocation-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+
+    margin:
+        20px 0
+        32px;
+}
+
+.allocation {
+    padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.allocation b {
+    font-size: 13px;
+}
+
+.allocation strong {
+    font-size: 20px;
+}
+
+.allocation small {
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.recommend-card {
+    padding: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.recommend-card > span {
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.1em;
+
+    color: var(--accent);
+}
+
+.recommend-card h3 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.recommend-card p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.recommend-card strong {
+    font-size: 18px;
+}
+
+.recommend-card a {
+    color: var(--accent);
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+.history-list {
+    display: grid;
+    gap: 12px;
+}
+
+.history-item {
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.history-item b {
+    font-size: 13px;
+    color: var(--accent);
+}
+
+.history-item p {
+    margin:
+        6px 0 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.history-item > span {
+    font-size: 12px;
+
+    border-radius: 20px;
+
+    padding:
+        6px
+        9px;
+
+    background: #f0eefc;
+
+    color: var(--accent);
+}
+
+.empty {
+    padding: 30px;
+
+    text-align: center;
+
+    color: var(--muted);
+}
+
+footer {
+    border-top:
+        1px solid
+        var(--line);
+
+    padding:
+        30px 24px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+
+    nav {
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .hero,
+    .planner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .cards.three {
+        grid-template-columns: 1fr;
+    }
+
+    .allocation-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .result-head,
+    .dashboard-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .topbar {
+        height: auto;
+
+        min-height: 70px;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+
+        padding:
+            15px
+            20px;
+    }
+
+    .container {
+        padding-top: 35px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}
